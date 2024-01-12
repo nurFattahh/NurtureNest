@@ -1,8 +1,15 @@
 {
-    "router":[
+    "version":2,
+    "builds": [
+        {
+            "src":"cmd/api/main.go",
+            "use":"@vercel/node"
+        }
+    ],
+    "routes": [
         {
             "src":"/(.*)",
-            "dest":"cdm/api/main.go"
+            "dest":"cmd/api/main.go"
         }
     ]
 }
