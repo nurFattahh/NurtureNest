@@ -5,6 +5,6 @@ import (
 	"context"
 )
 
-type TutorRepository12 interface {
-	Save(ctx context.Context, user domain.Tutor) (domain.Tutor, error)
+type GoalTrackingRepository interface {
+	SetGoal(ctx context.Context, goal domain.SetGoal) (domain.SetGoal, error)
 }

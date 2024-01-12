@@ -22,11 +22,15 @@ func InitializeAPI(cfg config.Config) (*http.ServerHTTP, error) {
 	tutorUseCase := usecase.NewTutorUseCase(tutorRepository)
 	tutorHandler := handler.NewTutorHandler(tutorUseCase)
 
-	chatBotrRepository := repository.NewChatBotRepository(gormDB)
-	chatBotUseCase := usecase.NewChatBotUseCase(chatBotrRepository)
+	chatBotRepository := repository.NewChatBotRepository(gormDB)
+	chatBotUseCase := usecase.NewChatBotUseCase(chatBotRepository)
 	chatBotHandler := handler.NewChatBotHandler(chatBotUseCase)
 
-	serverHTTP := http.NewServerHTTP(userHandler, tutorHandler, chatBotHandler)
+	goalTrackingRepository := repository.NewGoalTrackingRepository(gormDB)
+	goalTrackingUseCase := usecase.NewGoalTrackingUseCase(goalTrackingRepository)
+	goalTrackingHandler := handler.NewGoalTrackingHandler(goalTrackingUseCase)
+
+	serverHTTP := http.NewServerHTTP(userHandler, tutorHandler, chatBotHandler, goalTrackingHandler)
 
 	return serverHTTP, nil
 }

@@ -8,12 +8,14 @@ import (
 )
 
 type ServerHTTP struct {
-	engine       *gin.Engine
-	userHandler  *handler.UserHandler
-	tutorHandler *handler.TutorHandler
+	engine              *gin.Engine
+	userHandler         *handler.UserHandler
+	tutorHandler        *handler.TutorHandler
+	goalTrackingHandler *handler.GoalTrackingHandler
 }
 
-func NewServerHTTP(userHandler *handler.UserHandler, tutorHandler *handler.TutorHandler, chatBotHandler *handler.ChatBotHandler) *ServerHTTP {
+func NewServerHTTP(userHandler *handler.UserHandler, tutorHandler *handler.TutorHandler,
+	chatBotHandler *handler.ChatBotHandler, goalTrackingHandler *handler.GoalTrackingHandler) *ServerHTTP {
 	engine := gin.New()
 
 	// Use logger from Gin
@@ -37,12 +39,15 @@ func NewServerHTTP(userHandler *handler.UserHandler, tutorHandler *handler.Tutor
 	api.POST("/chatbot/generate", chatBotHandler.GenerateChatBot)
 	api.GET("/chatbot/chats", chatBotHandler.GetAllHistoryChatBot)
 
+	api.POST("/goal/set", goalTrackingHandler.SetGoal)
+
 	api.POST("tutor/", tutorHandler.Save)
 
 	return &ServerHTTP{
-		engine:       engine,
-		userHandler:  userHandler,
-		tutorHandler: tutorHandler,
+		engine:              engine,
+		userHandler:         userHandler,
+		tutorHandler:        tutorHandler,
+		goalTrackingHandler: goalTrackingHandler,
 	}
 }
 
