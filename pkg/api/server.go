@@ -21,6 +21,12 @@ func NewServerHTTP(userHandler *handler.UserHandler, tutorHandler *handler.Tutor
 	// Use logger from Gin
 	engine.Use(gin.Logger())
 
+	engine.GET("/", func(ctx *gin.Context) {
+		ctx.JSON(200, gin.H{
+			"message": "200",
+		})
+	})
+
 	//register user
 	engine.POST("user/register", userHandler.UserRegister)
 	engine.GET("/users", userHandler.UserFindAll)
