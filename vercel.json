@@ -3,7 +3,7 @@
     "builds": [
         {
             "src":"cmd/api/main.go",
-            "use":"@vercel/node"
+            "use":"@vercel/go"
         }
     ],
     "routes": [
