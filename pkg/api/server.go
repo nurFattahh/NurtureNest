@@ -46,6 +46,7 @@ func NewServerHTTP(userHandler *handler.UserHandler, tutorHandler *handler.Tutor
 	api.GET("/chatbot/chats", chatBotHandler.GetAllHistoryChatBot)
 
 	api.POST("/goal/set", goalTrackingHandler.SetGoal)
+	api.PATCH("/goal/result", goalTrackingHandler.GoalResult)
 
 	api.POST("tutor/", tutorHandler.Save)
 

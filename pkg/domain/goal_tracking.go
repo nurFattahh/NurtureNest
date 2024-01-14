@@ -4,16 +4,13 @@ import "time"
 
 type GoalTracking struct {
 	ID        uint      `json:"id" gorm:"primarykey"`
-	Goal      time.Time `json:"goal"`
-	Progress  time.Time `json:"progress"`
+	Goal      string    `json:"goal"`
 	UserID    uint      `json:"user_id"`
 	LimitTime time.Time `json:"limit"`
-}
-
-type SetGoal struct {
-	Goal      time.Time `json:"goal"`
-	UserID    uint      `json:"user_id"`
-	LimitTime time.Time `json:"limit"`
+	Status    string    `json:"status"`
+	IsActive  bool      `json:"isActive"`
+	Progress  string    `json:"progress"`
+	Result    bool      `json:"-"`
 }
 
 type RequestSetGoal struct {
@@ -22,9 +19,16 @@ type RequestSetGoal struct {
 	GoalSecond int `json:"goal_second"`
 }
 
-type CheckProgress struct {
-	Goal      time.Time `json:"goal"`
-	Progress  time.Time `json:"progress"`
+type GoalResult struct {
+	ID        uint      `json:"id"`
+	Progress  string    `json:"progress"`
+	Goal      string    `json:"goal"`
 	UserID    uint      `json:"user_id"`
 	LimitTime time.Time `json:"limit"`
+	Status    string    `json:"status"`
+	Result    bool      `json:"result"`
+}
+
+type RequestGoalResult struct {
+	Progress string `json:"progress"`
 }
