@@ -30,7 +30,11 @@ func InitializeAPI(cfg config.Config) (*http.ServerHTTP, error) {
 	goalTrackingUseCase := usecase.NewGoalTrackingUseCase(goalTrackingRepository)
 	goalTrackingHandler := handler.NewGoalTrackingHandler(goalTrackingUseCase)
 
-	serverHTTP := http.NewServerHTTP(userHandler, tutorHandler, chatBotHandler, goalTrackingHandler)
+	forumRepository := repository.NewForumRepository(gormDB)
+	forumUseCase := usecase.NewForumUseCase(forumRepository)
+	forumHandler := handler.NewForumHandler(forumUseCase)
+
+	serverHTTP := http.NewServerHTTP(userHandler, tutorHandler, chatBotHandler, goalTrackingHandler, forumHandler)
 
 	return serverHTTP, nil
 }

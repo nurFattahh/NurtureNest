@@ -12,10 +12,12 @@ type ServerHTTP struct {
 	userHandler         *handler.UserHandler
 	tutorHandler        *handler.TutorHandler
 	goalTrackingHandler *handler.GoalTrackingHandler
+	forumHandler        *handler.ForumHandler
 }
 
 func NewServerHTTP(userHandler *handler.UserHandler, tutorHandler *handler.TutorHandler,
-	chatBotHandler *handler.ChatBotHandler, goalTrackingHandler *handler.GoalTrackingHandler) *ServerHTTP {
+	chatBotHandler *handler.ChatBotHandler, goalTrackingHandler *handler.GoalTrackingHandler,
+	forumHandler *handler.ForumHandler) *ServerHTTP {
 	engine := gin.New()
 
 	// Use logger from Gin
@@ -48,6 +50,13 @@ func NewServerHTTP(userHandler *handler.UserHandler, tutorHandler *handler.Tutor
 	api.POST("/goal/set", goalTrackingHandler.SetGoal)
 	api.PATCH("/goal/result", goalTrackingHandler.GoalResult)
 
+	api.POST("/forum", forumHandler.PostForum)
+	engine.GET("/forums", forumHandler.GetAllForum)
+	engine.GET("/forums/find/", forumHandler.FindForumByTitle)
+	engine.GET("/forums/find/:id", forumHandler.GetForumById)
+	api.POST("/forum/comment", forumHandler.PostComment)
+	api.POST("/forum/comment/like/:forum_id", forumHandler.PostLike)
+
 	api.POST("tutor/", tutorHandler.Save)
 
 	return &ServerHTTP{
@@ -55,6 +64,7 @@ func NewServerHTTP(userHandler *handler.UserHandler, tutorHandler *handler.Tutor
 		userHandler:         userHandler,
 		tutorHandler:        tutorHandler,
 		goalTrackingHandler: goalTrackingHandler,
+		forumHandler:        forumHandler,
 	}
 }
 
